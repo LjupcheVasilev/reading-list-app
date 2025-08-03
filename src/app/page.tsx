@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Book, UpdateBookArgs } from "./domain/books"
+import { Book, UpdateBookArgs } from "../domain/books"
 
 export default function Home() {
   const [error, setError] = useState("")

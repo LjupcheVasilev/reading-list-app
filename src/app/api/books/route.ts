@@ -1,4 +1,4 @@
-import { CreateBookArgs } from "@/app/domain/books"
+import { CreateBookArgs } from "@/domain/books"
 import { getPrismaClient } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
