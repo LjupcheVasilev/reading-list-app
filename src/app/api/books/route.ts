@@ -1,4 +1,4 @@
-import { Prisma } from "@/generated/prisma"
+import { CreateBookArgs } from "@/app/domain/books"
 import { getPrismaClient } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Title and author are required' }, { status: 400 })
     }
 
-    const createBook: Prisma.BookCreateInput = {
+    const createBook: CreateBookArgs = {
         title,
         author,
     }

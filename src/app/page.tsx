@@ -1,10 +1,7 @@
 "use client"
 
-import { Prisma } from "@/generated/prisma"
 import { useEffect, useState } from "react"
-
-type Book = Prisma.BookGetPayload<null>
-type UpdateBook = Prisma.BookUpdateInput
+import { Book, UpdateBookArgs } from "./domain/books"
 
 export default function Home() {
   const [error, setError] = useState("")
@@ -38,7 +35,7 @@ export default function Home() {
     fetchBooks()
   }, [])
 
-  const updateBook = async (id: string, update: UpdateBook) => {
+  const updateBook = async (id: string, update: UpdateBookArgs) => {
     const response = await fetch(`/api/books/${id}`, {
       method: "POST",
       body: JSON.stringify({ read: update.read ?? false }),
