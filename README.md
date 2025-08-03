@@ -27,3 +27,4 @@ To run tests first run `npm install` then run the tests with `npm run test`
 - UI - did not spent too much time making the UI pretty
 - Separation of concerns - With more time I would separate all DB operations into separate files and use that
 - Tests - I would have liked to add more tests and possibly implement integration or e2e tests
+- Separate components - With more time I would have separated the components properly so they can be re-used across the app
