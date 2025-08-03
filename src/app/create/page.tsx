@@ -11,6 +11,8 @@ export default function CreateBook() {
   const createBook = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
+    setError("")
+
     const title = titleRef.current?.value
     const author = authorRef.current?.value
 
@@ -43,7 +45,9 @@ export default function CreateBook() {
       <form onSubmit={createBook}>
         <input type="text" name="title" placeholder="Title" ref={titleRef} />
         <input type="text" name="author" placeholder="Author" ref={authorRef} />
-        <button type="submit">{isLoading ? "Loading..." : "Submit"}</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
       </form>
     </main>
   )
