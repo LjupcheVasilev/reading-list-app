@@ -3,19 +3,22 @@
 import { Prisma } from "@/generated/prisma"
 import { useEffect, useState } from "react"
 
+type Book = Prisma.BookGetPayload<null>
+type UpdateBook = Prisma.BookUpdateInput
+
 export default function Home() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [books, setBooks] = useState<Prisma.BookSelect[]>([])
+  const [books, setBooks] = useState<Book[]>([])
 
   const fetchBooks = async () => {
     setIsLoading(true)
 
     try {
       const response = await fetch("/api/books")
-      const responseBody = await response.json()
+      const responseBody: Book[] | { error: string } = await response.json()
 
-      if (response.status !== 200) {
+      if ("error" in responseBody) {
         const { error } = responseBody
 
         console.error(error)
@@ -34,6 +37,35 @@ export default function Home() {
   useEffect(() => {
     fetchBooks()
   }, [])
+
+  const updateBook = async (id: string, update: UpdateBook) => {
+    const response = await fetch(`/api/books/${id}`, {
+      method: "POST",
+      body: JSON.stringify({ read: update.read ?? false }),
+    })
+
+    const responseBody = await response.json()
+
+    if ("error" in responseBody) {
+      const { error } = responseBody
+
+      console.error(error)
+      setError(error)
+    } else {
+      const updatedBooks = books.reduce((acc: Book[], book: Book) => {
+        if (book.id === responseBody.id) {
+          acc.push(responseBody)
+        } else {
+          acc.push(book)
+        }
+
+        return acc
+      }, [])
+
+      setBooks(updatedBooks)
+    }
+  }
+
   return (
     <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
       <h1>List of books</h1>
@@ -47,7 +79,12 @@ export default function Home() {
           <div>{book.author}</div>
           <div>
             <label htmlFor="bookRead">Read?</label>
-            <input id="bookRead" type="checkbox" checked={book.read ?? false} />
+            <input
+              id="bookRead"
+              type="checkbox"
+              checked={book.read ?? false}
+              onChange={() => updateBook(book.id, { read: !book.read })}
+            />
           </div>
         </div>
       ))}
