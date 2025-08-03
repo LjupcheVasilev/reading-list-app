@@ -28,3 +28,5 @@ To run tests first run `npm install` then run the tests with `npm run test`
 - Separation of concerns - With more time I would separate all DB operations into separate files and use that
 - Tests - I would have liked to add more tests and possibly implement integration or e2e tests
 - Separate components - With more time I would have separated the components properly so they can be re-used across the app
+
+I also did use AI autocompletion at the start of the project before I ran out of the free autocompletion tokens as well as Cursor chat for making the UI better looking at the end.
